@@ -1,0 +1,9 @@
+Este video ayuda a configurar el entorno:
+https://www.youtube.com/watch?v=Ptw1KKI9_Sg&ab_channel=AhmedSamir
+
+
+Para generar el .o se usa:
+g++ -IC:C:\SFML-2.6.0\include -I "C:\SFML-2.6.0\include" -c hello.cpp -o hello.o
+
+Para generar el .exe se usa:
+g++ -LC:\SFML-2.6.0\lib .\hello.o -o hello.exe -lmingw32 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-main -mwindows
