@@ -1,0 +1,62 @@
+Desgranación del Roadmap para el desarrollo de un juego estilo "Factorio" con funcionalidad multijugador:
+
+1. Motor de Juego Básico y Movimiento:
+   - Configuración del proyecto y estructura inicial.
+   - Creación de la ventana de juego y bucle principal.
+   - Implementación de la carga y visualización de mapas.
+   - Sistema de movimiento del personaje (input y animaciones).
+   - Gestión de colisiones básicas.
+
+2. Sistema de Inventario y Construcción:
+   - Diseño de la interfaz de usuario para el inventario.
+   - Sistema para recoger y almacenar recursos.
+   - Funcionalidad para seleccionar y colocar estructuras.
+   - Implementación de costes y requisitos de construcción.
+
+3. Sistema de Producción y Automatización:
+   - Diseño de máquinas y sistemas de producción.
+   - Lógica de procesamiento de recursos y cadenas de producción.
+   - Implementación de un sistema de cintas transportadoras o similares.
+   - Creación de un sistema de energía para alimentar las máquinas.
+
+4. IA para Control de Entidades:
+   - Implementación de trabajadores NPC con comportamientos básicos.
+   - Sistema de tareas y asignación de trabajos a NPCs.
+   - Pathfinding básico y movimiento de entidades.
+   - Lógica de automatización para tareas repetitivas.
+
+5. Economía y Sistema de Mejoras:
+   - Implementación de una moneda del juego y economía básica.
+   - Sistema de comercio con NPCs o mercado interno.
+   - Implementación de sistema de mejoras y niveles de tecnología.
+   - Diseño de árbol tecnológico y requisitos de desbloqueo.
+
+6. Exploración del Mapa y Expansión:
+   - Generación procedimental de mapas.
+   - Exploración y descubrimiento de nuevos recursos.
+   - Mecánicas de reclamación y expansión territorial.
+   - Eventos del mundo y descubrimientos especiales.
+
+7. Interfaz de Usuario Avanzada y HUD:
+   - Desarrollo de menús avanzados y opciones de configuración.
+   - Sistema de notificaciones y alertas en el juego.
+   - Implementación de estadísticas y seguimiento de progreso.
+   - Personalización del HUD y accesibilidad.
+
+8. Multijugador Básico:
+   - Configuración de la arquitectura de red.
+   - Sincronización del estado del juego entre jugadores.
+   - Implementación de chat y comunicación en el juego.
+   - Gestión de sesiones y conexión/desconexión de jugadores.
+
+9. Multijugador Completo y Matchmaking:
+   - Diseño de sistema de matchmaking para jugadores.
+   - Balance de juego y ajustes para el juego en línea.
+   - Implementación de lobbies y salas de espera.
+   - Seguridad de la red y manejo de latencia.
+
+10. Optimización y Escalabilidad:
+    - Perfilado de rendimiento y memoria.
+    - Optimización del código y recursos.
+    - Escalado de la infraestructura de red para soportar más jugadores.
+    - Refinamiento de la experiencia de usuario y pruebas de usabilidad.

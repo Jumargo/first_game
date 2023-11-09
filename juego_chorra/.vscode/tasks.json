@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile SFML project",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-IC:\\SFML-2.6.0\\include",
+                "-c",
+                "${workspaceFolder}\\main.cpp",
+                "-o",
+                "${workspaceFolder}\\main.o",
+                "-g"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Compiler task"
+        },
+        {
+            "label": "Link SFML project",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-LC:\\SFML-2.6.0\\lib",
+                "${workspaceFolder}\\main.o",
+                "-o",
+                "${workspaceFolder}\\main.exe",
+                "-lmingw32",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system",
+                "-lsfml-main",
+                "-mwindows",
+                "-g"
+            ],
+            "dependsOn": [
+                "Compile SFML project"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Linker task"
+        },
+        {
+            "label": "Run SFML project",
+            "type": "shell",
+            "command": "${workspaceFolder}\\main.exe",
+            "dependsOn": [
+                "Link SFML project"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
