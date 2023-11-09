@@ -5,6 +5,7 @@ void initializeTextures(sf::Texture& backgroundTexture, sf::Texture& playerTextu
 void handlePlayerInput(sf::Sprite& playerSprite);
 void scaleSpriteToWindowSize(sf::Sprite& sprite, const sf::Texture& texture, const sf::RenderWindow& window);
 void centerSprite(sf::Sprite& sprite, const sf::RenderWindow& window);
+void handlePlayerMovement(sf::Sprite& playerSprite, const sf::Vector2u& windowSize);
 
 
 int main() {
@@ -33,7 +34,7 @@ int main() {
         }
 
         // Actualizaciones
-        handlePlayerInput(playerSprite);
+        handlePlayerMovement(playerSprite, window.getSize());
 
         // Renderizado
         window.clear();
@@ -56,19 +57,41 @@ void initializeTextures(sf::Texture& backgroundTexture, sf::Texture& playerTextu
     }
 }
 
-void handlePlayerInput(sf::Sprite& playerSprite) {
+void handlePlayerMovement(sf::Sprite& playerSprite, const sf::Vector2u& windowSize) {
+    float moveSpeed = 5.0f; // Ajusta la velocidad de movimiento según sea necesario
+    sf::Vector2f movement(0.f, 0.f);
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        playerSprite.move(0.f, -1.f);
+        movement.y -= moveSpeed;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        playerSprite.move(0.f, 1.f);
+        movement.y += moveSpeed;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        playerSprite.move(-1.f, 0.f);
+        movement.x -= moveSpeed;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        playerSprite.move(1.f, 0.f);
+        movement.x += moveSpeed;
     }
+
+    // Calcula la nueva posición potencial del jugador
+    sf::Vector2f newPosition = playerSprite.getPosition() + movement;
+
+    // Limites del mapa (asumiendo que el origen está en la esquina superior izquierda)
+    sf::FloatRect playerBounds = playerSprite.getGlobalBounds();
+    float leftBound = 0;
+    float rightBound = windowSize.x - playerBounds.width;
+    float topBound = 0;
+    float bottomBound = windowSize.y - playerBounds.height;
+
+    // Verifica y corrige la posición del jugador si está fuera de los límites
+    newPosition.x = std::max(newPosition.x, leftBound);
+    newPosition.x = std::min(newPosition.x, rightBound);
+    newPosition.y = std::max(newPosition.y, topBound);
+    newPosition.y = std::min(newPosition.y, bottomBound);
+
+    // Establece la posición corregida
+    playerSprite.setPosition(newPosition);
 }
 
 void scaleSpriteToWindowSize(sf::Sprite& sprite, const sf::Texture& texture, const sf::RenderWindow& window) {
