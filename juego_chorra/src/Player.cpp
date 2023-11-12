@@ -36,11 +36,24 @@ void Player::handleInput() {
     }
 }
 
-void Player::update(sf::Time deltaTime) {
-    // Actualizar la posición del personaje.
-    // deltaTime.asSeconds() convierte el tiempo de juego al tiempo en segundos,
-    // lo cual es necesario para un movimiento suave y dependiente del tiempo.
-    sprite.move(velocity * deltaTime.asSeconds());
+void Player::update(sf::Time deltaTime, sf::Vector2u windowSize) {
+    sf::Vector2f newPosition = sprite.getPosition() + velocity * deltaTime.asSeconds();
+
+    // Colisiones con los bordes de la ventana
+    if (newPosition.x < 0) {
+        newPosition.x = 0;
+    }
+    if (newPosition.y < 0) {
+        newPosition.y = 0;
+    }
+    if (newPosition.x + sprite.getGlobalBounds().width > windowSize.x) {
+        newPosition.x = windowSize.x - sprite.getGlobalBounds().width;
+    }
+    if (newPosition.y + sprite.getGlobalBounds().height > windowSize.y) {
+        newPosition.y = windowSize.y - sprite.getGlobalBounds().height;
+    }
+
+    sprite.setPosition(newPosition);
 }
 
 void Player::render(sf::RenderWindow& window) {

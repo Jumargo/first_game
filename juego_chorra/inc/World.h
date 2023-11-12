@@ -7,7 +7,7 @@
 class World {
 public:
     World(sf::RenderWindow& window);
-    void initialize();
+    void initialize(unsigned int width, unsigned int height);
     void update(sf::Time deltaTime);
     void render();
 

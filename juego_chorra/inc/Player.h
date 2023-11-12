@@ -9,7 +9,7 @@ public:
     Player();
     void initialize();
     void handleInput();
-    void update(sf::Time deltaTime);
+    void update(sf::Time deltaTime, sf::Vector2u windowSize);
     void render(sf::RenderWindow& window);
 
 private:

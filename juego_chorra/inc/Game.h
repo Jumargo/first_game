@@ -8,7 +8,7 @@
 
 class Game {
 public:
-    Game();
+    Game(unsigned int width, unsigned int height);
     void run();
 
 private:
