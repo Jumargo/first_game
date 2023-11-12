@@ -7,11 +7,10 @@
             "command": "g++",
             "args": [
                 "-IC:\\SFML-2.6.0\\include",
-                "-c",
-                "${workspaceFolder}\\main.cpp",
-                "-o",
-                "${workspaceFolder}\\main.o",
-                "-g"
+                "-IC:\\Programacion\\juego_chorra\\inc",
+                "-c", // Compilar pero no enlazar
+                "${workspaceFolder}\\src\\*.cpp", // Esto compilará todos los archivos .cpp en el directorio src
+                "-g" // Símbolos de depuración
             ],
             "group": "build",
             "problemMatcher": [
@@ -25,7 +24,7 @@
             "command": "g++",
             "args": [
                 "-LC:\\SFML-2.6.0\\lib",
-                "${workspaceFolder}\\main.o",
+                "${workspaceFolder}\\*.o",
                 "-o",
                 "${workspaceFolder}\\main.exe",
                 "-lmingw32",
