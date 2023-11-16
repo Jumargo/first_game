@@ -1,16 +1,26 @@
 
 #include "Player.h"
 
-Player::Player() : sprite(), velocity(0.f, 0.f) {
-    // Cargar textura y configurar sprite aquí
+Player::Player() : sprite(), velocity(0.f, 0.f), currentTextureIndex(0), animationTimer(0.f) {
+    // Cargar texturas y configurar sprite aquí
 }
 
 void Player::initialize() {
-    if (!texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\pj.png")) {
-        // manejar error
+    // Cargar las texturas de caminata
+    sf::Texture texture;
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\Walk1.png")) {
+        walkingTextures.push_back(texture);
     }
-    sprite.setTexture(texture);
-    sprite.setScale(0.1f, 0.1f); // Ajusta el tamaño del sprite a la mitad
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\Walk2.png")) {
+        walkingTextures.push_back(texture);
+    }
+
+    // Establecer la textura inicial del sprite
+    if (!walkingTextures.empty()) {
+        sprite.setTexture(walkingTextures[0]);
+    }
+
+    sprite.setScale(3, 3); // Ajusta el tamaño del sprite
     // Posición inicial del personaje en el centro se manejará en Game.cpp
 }
 
@@ -22,16 +32,16 @@ void Player::handleInput() {
 
     // Comprobar las entradas del usuario y ajustar la velocidad en consecuencia.
     // Estos valores se pueden ajustar para cambiar la sensación del movimiento.
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         velocity.x = -200.0f;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         velocity.x = 200.0f;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         velocity.y = -200.0f;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         velocity.y = 200.0f;
     }
 }
@@ -54,6 +64,21 @@ void Player::update(sf::Time deltaTime, sf::Vector2u windowSize) {
     }
 
     sprite.setPosition(newPosition);
+
+    // Actualizar la animación solo si el personaje se está moviendo
+    if (velocity.x != 0.0f || velocity.y != 0.0f) {
+        animationTimer += deltaTime.asSeconds();
+        if (animationTimer > 0.2f) {  // Cambiar la textura cada 0.2 segundos
+            currentTextureIndex = (currentTextureIndex + 1) % walkingTextures.size();
+            sprite.setTexture(walkingTextures[currentTextureIndex]);
+            animationTimer = 0.f;
+        }
+    } else {
+        // Si el personaje no se mueve, reiniciar la animación a la pose inicial
+        currentTextureIndex = 0; // o cualquier índice que represente la pose estática
+        sprite.setTexture(walkingTextures[currentTextureIndex]);
+    }
+    
 }
 
 void Player::render(sf::RenderWindow& window) {
