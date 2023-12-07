@@ -2,20 +2,24 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include "Tile.h"
+#include "PerlinNoise.h"
+#include "config.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class World {
-public:
-    World(sf::RenderWindow& window);
-    void initialize(unsigned int width, unsigned int height);
-    void update(sf::Time deltaTime);
-    void render();
-
 private:
     sf::RenderWindow& window;
-    sf::Sprite backgroundSprite;
-    sf::Texture backgroundTexture;
-    // Otros miembros privados
+    std::vector<std::vector<Tile>> map;
+    sf::Texture aguaTexture, tierraTexture, cespedTexture;
+    PerlinNoise perlinNoise;
+
+public:
+    World(sf::RenderWindow& window);
+
+    void render();
+    void initializeMap(unsigned int width, unsigned int height);
 };
 
 #endif // WORLD_H

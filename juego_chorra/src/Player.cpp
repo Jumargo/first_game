@@ -2,25 +2,40 @@
 #include "Player.h"
 
 Player::Player() : sprite(), velocity(0.f, 0.f), currentTextureIndex(0), animationTimer(0.f) {
-    // Cargar texturas y configurar sprite aquí
+    // Cargar texturas para caminar hacia la izquierda
+    sf::Texture texture;
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\left_walk1.png")) {
+        leftWalkingTextures.push_back(texture);
+    }
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\left_Walk2.png")) {
+        leftWalkingTextures.push_back(texture);
+    }
+
+    // Cargar texturas para caminar hacia la derecha
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\right_walk1.png")) {
+        rightWalkingTextures.push_back(texture);
+    }
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\right_walk2.png")) {
+        rightWalkingTextures.push_back(texture);
+    }
 }
 
 void Player::initialize() {
     // Cargar las texturas de caminata
     sf::Texture texture;
-    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\Walk1.png")) {
-        walkingTextures.push_back(texture);
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\right_walk1.png")) {
+        rightWalkingTextures.push_back(texture);
     }
-    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\Walk2.png")) {
-        walkingTextures.push_back(texture);
+    if (texture.loadFromFile("C:\\Programacion\\juego_chorra\\img\\Destroyer\\walk\\right_walk2.png")) {
+        rightWalkingTextures.push_back(texture);
     }
 
     // Establecer la textura inicial del sprite
-    if (!walkingTextures.empty()) {
-        sprite.setTexture(walkingTextures[0]);
+    if (!rightWalkingTextures.empty()) {
+        sprite.setTexture(rightWalkingTextures[0]);
     }
 
-    sprite.setScale(3, 3); // Ajusta el tamaño del sprite
+    sprite.setScale(1, 1); // Ajusta el tamaño del sprite
     // Posición inicial del personaje en el centro se manejará en Game.cpp
 }
 
@@ -65,18 +80,24 @@ void Player::update(sf::Time deltaTime, sf::Vector2u windowSize) {
 
     sprite.setPosition(newPosition);
 
-    // Actualizar la animación solo si el personaje se está moviendo
+    // Actualizar la animación
     if (velocity.x != 0.0f || velocity.y != 0.0f) {
         animationTimer += deltaTime.asSeconds();
-        if (animationTimer > 0.2f) {  // Cambiar la textura cada 0.2 segundos
-            currentTextureIndex = (currentTextureIndex + 1) % walkingTextures.size();
-            sprite.setTexture(walkingTextures[currentTextureIndex]);
+        if (animationTimer > 0.09f) {
+            // Aquí puedes agregar una lógica similar para las direcciones arriba/abajo si es necesario
+            if (velocity.x < 0) { // Movimiento hacia la izquierda
+                currentTextureIndex = (currentTextureIndex + 1) % leftWalkingTextures.size();
+                sprite.setTexture(leftWalkingTextures[currentTextureIndex]);
+            } else if (velocity.x > 0) { // Movimiento hacia la derecha
+                currentTextureIndex = (currentTextureIndex + 1) % rightWalkingTextures.size();
+                sprite.setTexture(rightWalkingTextures[currentTextureIndex]);
+            }
             animationTimer = 0.f;
         }
     } else {
-        // Si el personaje no se mueve, reiniciar la animación a la pose inicial
-        currentTextureIndex = 0; // o cualquier índice que represente la pose estática
-        sprite.setTexture(walkingTextures[currentTextureIndex]);
+        // Reiniciar la animación a la pose inicial si el personaje no se mueve
+        currentTextureIndex = 0;
+        sprite.setTexture(rightWalkingTextures[currentTextureIndex]); // O la textura estática correspondiente
     }
     
 }

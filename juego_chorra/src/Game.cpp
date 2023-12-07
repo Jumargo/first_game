@@ -1,17 +1,10 @@
-
 #include "Game.h"
-
-// Game::Game() : window(sf::VideoMode(800, 600), "SFML Game"), player(), world(window) {
-//     // Inicialización de miembros y recursos
-//     player.initialize();
-//     world.initialize();
-// }
 
 Game::Game(unsigned int width, unsigned int height) 
     : window(sf::VideoMode(width, height), "SFML Game"), player(), world(window) {
     // Inicialización de miembros y recursos
     player.initialize();
-    world.initialize(width, height); // Pasar el tamaño de la ventana al mundo
+    world.initializeMap(width, height); // Pasar el tamaño de la ventana al mundo
 }
 
 void Game::run() {
@@ -34,7 +27,6 @@ void Game::processEvents() {
 
 void Game::update(sf::Time deltaTime) {
     player.update(deltaTime, window.getSize());
-    world.update(deltaTime);
 }
 
 void Game::render() {

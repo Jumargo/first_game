@@ -1,11 +1,5 @@
 #include "Game.h"
 
-// int main() {
-//     Game game;
-//     game.run();
-//     return 0;
-// }
-
 int main() {
     // Obtener la resolución del monitor
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
